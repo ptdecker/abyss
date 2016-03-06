@@ -33,7 +33,7 @@
 
 # Compilation directories
 bin/
-src/
+obj/
 
 # Editor and IDE configs
 *.sublime-*

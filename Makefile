@@ -20,7 +20,7 @@ $(ODIR)/%.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 encounter: $(OBJ)
-	gcc -o $(BDIR)/$@ $^ $(CFLAGS)
+	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
 
 .PHONY: clean
 
