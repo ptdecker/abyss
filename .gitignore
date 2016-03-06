@@ -30,3 +30,10 @@
 
 # Debug files
 *.dSYM/
+
+# Compilation directories
+bin/
+src/
+
+# Editor and IDE configs
+*.sublime-*
