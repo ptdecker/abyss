@@ -12,7 +12,7 @@ BDIR = bin
 CC = clang
 CFLAGS = -std=c99 -Wall -g -I include
 
-_OBJ = encounter.o
+_OBJ = encounter.o monsters.o utility.o dice.o magic.o conditions.o spells.o trinkets.o
 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
