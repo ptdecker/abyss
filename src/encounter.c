@@ -7,308 +7,27 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <time.h>
 
-#define LINEWIDTH  60
-
-static char line[LINEWIDTH];
-
-/*
- * clearconsole()
- */
-
-static void clearconsole() {
-	printf("\x1B[2J\x1B[f");
-}
-
-/*
- * printline()
- * Prints the line until 'pos' column is reached
- */
-
-static void printline(int pos) {
-    int i;
-    for (i = 0; i < pos; i++)
-        (void)putchar(line[i]);
-//    if (pos > 0)
-        (void)putchar('\n');
-}
-
-/*
- * findblank()
- * Walks backwards from the current position toward the front of
- * the line looking for the first space character and returns its position
- */
-
-static int findblank(int pos) {
-    while (pos > 0 && line[pos] != ' ')
-        pos--;
-    if (pos == 0)
-        return LINEWIDTH;
-    else
-        return (pos + 1);
-}
-
-/*
- * squish()
- * Copy characters starting at 'pos' to the beginning of the line
- * and return the adjusted value of 'pos'.  This compacts the line
- * leaving any text after 'pos' still in the buffer.
- */
-
-static int squish(int pos) {
-    int i = 0;
-    int j;
-    if (pos <= 0 || pos >= LINEWIDTH)
-        return 0;
-    for (j = pos; j < LINEWIDTH; ++j) {
-        line[i] = line[j];
-        i++;
-    }
-    return i;
-}
-
-/*
- * niceprint()
- * Print out a message nicely formated
- */
-
-static void niceprint(char message[]) {
-
-    char c;
-    int index = 0;
-    int pos = 0;
-
-    while ((c = message[index++]) != (char)'\0') {
-        line[pos] = c;
-		if (c == '\n') {
-            printline(pos);
-            pos = 0;
-        } else if (++pos >= LINEWIDTH) {
-            pos = findblank(pos);
-            printline(pos);
-            pos = squish(pos);
-        }
-    }
-
-    return;
-}
-
-static unsigned d(unsigned sides) {
-	return (rand() % sides + 1);
-}
-
-static void skeletons(unsigned count) {
-	printf("%d skeletons are encountered\n", count);
-}
-
-static void minotaurskeletons(unsigned count) {
-	printf("%d minotaur skeletons are encountered\n", count);
-}
-
-static void greenslime(unsigned count) {
-	printf("%d green slime are encountered\n", count);
-}
-
-static void yellowmold(unsigned count) {
-	printf("%d yellow mold are encountered\n", count);
-}
-
-static void brownmold(unsigned count) {
-	printf("%d brown mold are encountered\n", count);
-}
-
-static void barlgura(unsigned count) {
-	printf("%d balgura are encountered\n", count);
-}
-
-static void dretch(unsigned count) {
-	printf("%d dreath are encountered\n", count);
-}
-
-static void shadowdemon(unsigned count) {
-	printf("%d shadow demon are encountered\n", count);
-}
-
-static void giantspider(unsigned count) {
-	printf("%d giant spider are encountered\n", count);
-}
-
-static void carrioncrawler(unsigned count) {
-	printf("%d carrion crawler are encountered\n", count);
-};
-
-static void firebeetle(unsigned count) {
-	printf("%d firebeetle are encountered\n", count);
-};
-
-
-static void rocktopus(unsigned count) {
-	printf("%d roctopus are encountered\n", count);
-};
-
-static void ochrejelly(unsigned count) {
-	printf("%d ochre jelly are encountered\n", count);
-};
-
-static void chuul(unsigned count) {
-	printf("%d chuul are encountered\n", count);
-};
-
-static void grell(unsigned count) {
-	printf("%d grell are encountered\n", count);
-};
-
-static void grick(unsigned count) {
-	printf("%d grick are encountered\n", count);
-};
-
-static void orog(unsigned count) {
-	printf("%d orog are encountered\n", count);
-};
-
-static void piercer(unsigned count) {
-	printf("%d piercer are encountered\n", count);
-};
-
-static void umberhulk(unsigned count) {
-	printf("%d umber hulk are encountered\n", count);
-};
-
-static void moonelf(unsigned count) {
-	printf("%d moon elf are encountered\n", count);
-};
-
-static void shielddwarf(unsigned count) {
-	printf("%d shield dwarf are encountered\n", count);
-};
-
-static void human(unsigned count) {
-	printf("%d human are encountered\n", count);
-};
-
-static void goblin(unsigned count) {
-	printf("%d goblin are encountered\n", count);
-};
-
-static void goblinboss(unsigned count) {
-	printf("%d goblin boss are encountered\n", count);	
-}
-
-static void gasspore(unsigned count) {
-	printf("%d gas spore are encountered\n", count);
-};
-
-static void shrieker(unsigned count) {
-	printf("%d shrieker are encountered\n", count);
-};
-
-static void violetfungi(unsigned count) {
-	printf("%d violet fungi are encountered\n", count);
-};
-
-static void deepgnome(unsigned count) {
-	printf("%d deep gnome are encountered\n", count);
-};
-
-static void drow(unsigned count) {
-	printf("%d drow are encountered\n", count);
-};
-
-static void duergar(unsigned count) {
-	printf("%d duergar are encountered\n", count);
-};
-
-static void duergarkavalrachni(unsigned count) {
-	printf("%d duergar kavalrachni are encountered\n", count);
-};
-
-static void stonegiant(unsigned count) {
-	printf("%d stone giant are encountered\n", count);
-};
-
-static void bandit(unsigned count) {
-	printf("%d bandit are encountered\n", count);
-};
-
-static void banditcaptain(unsigned count) {
-	printf("%d bandit captain are encountered\n", count);
-};
-
-static void orc(unsigned count) {
-	printf("%d orc are encountered\n", count);
-};
-
-static void eyeofgruumsh(unsigned count) {
-	printf("%d Eye of Gruumsh orc are encountered\n", count);
-};
-
-static void myconid(unsigned count) {
-	printf("%d myconid are encountered\n", count);
-}
-
-static void drowspore(unsigned count) {
-	printf("%d drow spore servants are encountered\n", count);
-};
-
-static void	duergarspore(unsigned count) {
-	printf("%d duergar spore servants are encountered\n", count);
-};
-
-static void hookhorrorspore(unsigned count) {
-	printf("%d hook horror spore servants are encountered\n", count);
-};
-
-static void quaggothspore(unsigned count) {
-	printf("%d quaggoth spore servants are encountered\n", count);
-};
-
-static void giantlizard(unsigned count) {
-	printf("%d giant lizard are encountered\n", count);
-};
-
-static void malesteeder(unsigned count) {
-	printf("%d male steeder are encountered\n", count);
-};
-
-static void femalesteeder(unsigned count) {
-	printf("%d female steeder are encountered\n", count);
-};
-
-static void kuotoa(unsigned count) {
-	printf("%d kuotoa are encountered\n", count);
-};
-
-static void magictablea(void) {
-	printf("A magic item from Magic Table A\n");
-};
-
-static void magictableb(void) {
-	printf("A magic item from Magic Table B\n");
-};
-
-static void magictablec(void) {
-	printf("A magic item from Magic Table C\n");
-};
-
-static void indefinitemadness(void) {
-	printf("An indefinite madness\n");
-};
+#include "monsters.h"
+#include "utility.h"
+#include "dice.h"
+#include "magic.h"
+#include "conditions.h"
+#include "trinkets.h"
 
 static void ambushlair(unsigned d20) {
 	int i;
 	unsigned d4;
 	if (d20 < 11)
 		return;
-	(void)putchar('\n');
 	niceprint("This ambush has occurred in the monster's lair.\n\n");
 	if (d20 < 13)
 		niceprint("The lair contains a humanoid skeleton or corpse "
-			      "clutching a salvagable, non-magical weapon.\n");
+			      "clutching a salvagable, non-magical weapon.\n\n");
 	else if (d20 < 15)
 		niceprint("The lair contains a humanoid skeleton or corpse "
-			      "wearing a salvagable suit of non-magical armor.\n");
+			      "wearing a salvagable suit of non-magical armor.\n\n");
 	else if (d20 < 18)
 		printf("The lair contains %d 50gp gem(s)\n", d(6));
 	else if (d20 < 19) {
@@ -325,7 +44,7 @@ static void ambushlair(unsigned d20) {
 }
 
 static void ambush(unsigned d20) {
-	niceprint("One or more creatures attempt to ambush the party.\n");
+	niceprint("One or more creatures attempt to ambush the party.\n\n");
 	switch (d20) {
 		case  1: 
 		case  2:
@@ -381,7 +100,7 @@ static void domesticcrawler(void) {
 
 static void slaves(unsigned d4) {
 	niceprint("The characters encounter slaves wandering the Underdark since "
-		      "their escape from Gracklstugh or Menzoberranzan.  They are "
+		      "their escape from Gracklstugh or Menzoberranzan. They are "
 		      "scrounging for food and water.\n\n");
 	if (d4 < 4) 
 		niceprint("They are friendly and will join the party if given food and water.\n\n");
@@ -404,29 +123,28 @@ static void fungi(unsigned d6) {
 			gasspore(d(4));
 			d4 = d(4);
 			if (d4 == 1) {
-				(void)putchar('\n');
-				niceprint("The gas spore caries the memory of a dead beholder.\n");
+				niceprint("The gas spore caries a memory fragment of a dead beholder.\n\n");
 				d4 = d(4);
 				switch (d4) {
 					case 1:
 						niceprint("It is a memory of a tense negotiation "
 							      "with drow, ending with the beholder agreeing to allow the "
 							      "drow safe passage thorugh \"the Vast Oblivium\" in exchange "
-							      "for help ridding its lair of a deep gnome infestation.\n");
+							      "for help ridding its lair of a deep gnome infestation.\n\n");
 						break;
 					case 2:
 						niceprint("It is a memory of chasing svirfneblin thieves "
-							      "through the tunnels of its domain to recover stolen gemstones.\n");
+							      "through the tunnels of its domain to recover stolen gemstones.\n\n");
 						break;
 					case 3:
 						niceprint("It is a memory of a fierce battle against "
 							      "a wizened drow archmage, ending with the beholder suffering "
-							      "a grievous injury.\n");
+							      "a grievous injury.\n\n");
 						break;
 					case 4:
 						niceprint("It is a memory of spying on a drow ranger "
 							       "with two gleaming scimitars and a black, quadrupedal animal "
-							       "companion.\n");
+							       "companion.\n\n");
 						break;
 					default:
 						printf("Impossible beholder memory %d\n", d4);
@@ -452,7 +170,7 @@ static void madcreature(unsigned d4) {
 	int d20;
 	niceprint("The party encounters a creature driven insane by the influence "
 		      "of the demon lords. If cured of its madness, the creature behaves "
-		      "in accordance with its alignment.\n");
+		      "in accordance with its alignment.\n\n");
 	switch (d4) {
 		case 1: deepgnome(1);  break;
 		case 2: drow(1);       break;
@@ -466,8 +184,7 @@ static void madcreature(unsigned d4) {
 	d20 = d(20);
 	if (d20 < 11) 
 		return;
-	(void)putchar('\n');
-	printf("\nThe mad creature has something of interest:\n\n");
+	printf("The mad creature has something of interest:\n\n");
 	if (d20 < 14)
 		printf("A 10gp gem\n");
 	else if (d20 < 16)
@@ -485,7 +202,7 @@ static void raiders(unsigned d6) {
 	niceprint("A group of raiders from the surface ventured into the Underdark looking "
 		      "for riches and got lost. They are initially hostile toward the party, "
 		      "though clever characters might try bribing them for safe passage or "
-		      "information.\n");
+		      "information.\n\n");
 	switch (d6) {
 		case 1:
 		case 2:
@@ -509,8 +226,7 @@ static void raiders(unsigned d6) {
 	d20 = d(20);
 	if (d20 < 6) 
 		return;
-	(void)putchar('\n');
-	printf("\nThe leader of the group has something of interest:\n\n");
+	printf("The leader of the group has something of interest:\n\n");
 	if (d20 < 11)
 		printf("%d 10gp gemstones in a pouch\n", (d(6)+d(6)));
 	else if (d20 < 15)
@@ -553,32 +269,53 @@ static void scouts(unsigned d6) {
 };
 
 static void society(unsigned d10) {
-	niceprint("The party stumbles upon a member of the Society of Brilliance.\n\n");
+	niceprint("The party stumbles upon a member of the Society of Brilliance, a sect "
+		      "of highly intelligent monsters that have banded togehter to solve all of "
+		      "the Underdark's problems. The society is investigating areas suffused with "
+		      "faerzress to ascertain whether it has something to do with what the society "
+		      "fears is some kind of \"demonic incursion.\"\n\n");
 	switch (d10) {
 		case 1:
 		case 2:
 			printf("Y the derro savant\n\n");
+			derrosavant(1);
 			break;
 		case 3:
 		case 4:
 			printf("Blurg the orog\n\n");
+			orog(1);
 			break;
 		case 5:
 		case 6:
 			printf("Grazilaxx the mind flayer\n\n");
+			mindflayer(1);
+			niceprint("He prefers to use telepathy to communicate\n\n");
 			break;
 		case 7:
 		case 8:
 			printf("Skriss the troglodyte\n\n");
+			troglodyte(1);
 			break;
 		case 9:
 		case 10:
 			printf("Sloopidoop the kuo-toa archpriest\n\n");
+			kuotoa(1);
 			break;
 		default:
 			printf("Impossible society encounter of %d\n", d10);
 			exit(EXIT_FAILURE);
 	}
+	niceprint("Alignment: Netural\nIntelligence: 18 (+4)\nFluent in multiple langages "
+		      "including: Dwarvish, Elvish, and Undercommon\n\n");
+	niceprint("He is erudite and talkative, prefering deplomacy and debate over violence.\n\n");
+	niceprint("Can cast teleport once per day if the intended destination is within 30' of "
+		      "another society member but faerzress disrupts this ability\n\n");
+	niceprint("He is aware that paths to the surface world exist but has not explored any of "
+		      "them since his concern is with the Underdark. If the characters seem intent on "
+		      "reaching the surface, he might suggest they look for a guide in one of the "
+		      "Underdark's larger settlements, such as Blingdensone or Gracklstugh. And, he "
+		      "can proide detailed verbal directions; however, cannot guarantee that the "
+		      "route is safe. Otherwise, he will provide whatever assistance he can.\n\n");
 };
 
 static void sporeservants(unsigned d10) {
@@ -619,6 +356,8 @@ static void traders(unsigned d4) {
 		case 1:
 			deepgnome(numtraders);
 			if (d(6) < 4) {
+				niceprint("The traders have beasts of burden with them to help "
+					      "carry their wares.\n\n");
 				giantlizard((numtraders / 2) + 1);
 			}
 			break;
@@ -628,7 +367,7 @@ static void traders(unsigned d4) {
 				giantlizard((numtraders / 2) + 1);
 			}
 			niceprint("If the drow traders see the adventurers and have the opportunity "
-				      "to report it, increase the drow pursuit level by 1.\n");
+				      "to report it, increase the drow pursuit level by 1.\n\n");
 			break;
 		case 3:
 			duergar(numtraders);
@@ -659,11 +398,10 @@ static void boneyard(void) {
 	niceprint("An eerie cavern littered with countless bones of various creatures. "
 		      "It is unclear if this is the natural graveyard for some Underdark species "
 		      "or the former lair of a fearsome predator. The characters can potentially "
-		      "gather useful material for crafting among the bones.\n");
+		      "gather useful material for crafting among the bones.\n\n");
 	d20 = d(20);
     if (d20 < 15)
     	return;
-    (void)putchar('\n');
     if (d20 < 19)
     	skeletons(d(4) + d(4) + d(4));
     else
@@ -672,12 +410,13 @@ static void boneyard(void) {
 }
 
 static void cliff(void) {
-	niceprint("A cliff 2d4 x 10 feet high blocks the party's passage, but a rolled-up "
+	niceprint("A cliff blocks the party's passage, but a rolled-up "
 		      "rope lader is visible at the top. If someone can climb the cliff-requiring "
 		      "a successful DC 15 Strength (Athletics) check--and toss down the ladder, "
 		      "the characters can proceed. Otherwise, they lose a day's travel finding "
 		      "another route. If the characters remove the ladder once they are at the "
-		      "top, they decrease the drow pursuit level by 1.\n");
+		      "top, they decrease the drow pursuit level by 1.\n\n");
+	printf("Height: %d\n\n", 10 * (d(4) + d(4)));
 }
 
 static void crystal(void) {
@@ -689,13 +428,14 @@ static void crystal(void) {
 		       "saving throw or be blinded for 1 minute. A creature blinded by this effect "
 		       "repeats the Constitution saving throw at the end of each of its turns. "
 		       "On a successful save, it is no longer blinded. The characters can "
-		       "harvest 3d4 of the crystals, but taking the time to do so increases "
-		       "the drow pursuit level by 1.\n");
+		       "harvest the crystals, but taking the time to do so increases "
+		       "the drow pursuit level by 1.\n\n");
+	printf("%d can be harvested\n\n", d(4) + d(4) + d(4));
 }
 
 static void fungus(void) {
 	niceprint("The adventurers stumble upon a cavern filled with fungi and mushrooms "
-		      "of all sizes and types.\n");
+		      "of all sizes and types.\n\n");
 }
 
 static void gas(void) {
@@ -708,23 +448,25 @@ static void gas(void) {
 		      "a failed save, or half as much damage on a successful one. Any open "
 		      "flames brought into the area cause the gas to explode. Each creature "
 		      "in the explosion must make a DC 15 Dexterity saving throw, taking 3d6 "
-		      "fire damage on a failed save, or half as much damage on a successful one.\n");
+		      "fire damage on a failed save, or half as much damage on a successful one.\n\n");
 }
 
 static void gorge(void) {
-	niceprint("The characters must make a difficult climb down a gorge 2d4 x100 feet "
-		      "deep and up the other side, or find a way around it. Their travel pace "
+	niceprint("The characters must make a difficult climb down a gorge "
+		      "and up the other side, or find a way around it. Their travel pace "
 		      "for the day is slowed by half unless they come up with a plan to cross "
-		      "the gorge quickly.\n");
+		      "the gorge quickly.\n\n");
+	printf("Gorge Depth: %d feet\n\n", 100 * (d(4) + d(4)));
 }
 
 static void ledge(void) {
-	niceprint("The characters must walk along an 18\"-wide ledge that skirts a ravine "
-		      "2d6 x10 feet deep. The party's travel pas for the day is slowed by half, "
+	niceprint("The characters must walk along an 18\"-wide ledge that skirts a ravine. "
+		      "The party's travel pace for the day is slowed by half, "
 		      "and each character must succeed on a DC 10 Dexterity saving throw to "
 		      "avoid a fall. Precautions such as roping everyone together let each "
 		      "character make the save with advantage. Increase the pursuit leve of the "
-		      "drow by 1.\n");
+		      "drow by 1.\n\n");
+	printf("Ravine Depth: %d feet\n\n", 10 * (d(6) + d(6)));
 }
 
 static void sounds(void) {
@@ -732,21 +474,21 @@ static void sounds(void) {
 		      "incoherent gibbering echoing through nearby passages, without any "
 		      "apparent origin. Each character must make a successful DC 11 Wisdom "
 		      "saving throw. On a failed save, the character's madness level increases "
-		      "by 1.\n");
+		      "by 1.\n\n");
 }
 
 static void lava(void) {
 	niceprint("As the party traverses a long and winding corridor, a tremor opens up "
 		      "a lava-filled fissure behind them. Each character must make a DC 10 "
 		      "Dexterity saving throw to avoid the lava swell, taking 6d6 fire damage "
-		      "on a failed save. Decrease the drow pursuit level by 1.\n");
+		      "on a failed save. Decrease the drow pursuit level by 1.\n\n");
 }
 
 static void muck(void) {
 	niceprint("The adventurers must wade through a broad, 3'-deep pit of slimy muck. "
 		      "The muck is difficult terrain and characters have disadvantage on "
 		      "Dexterity saving throws while within it, but their travel pace for the "
-		      "day is slowed by half if they go around it.\n");
+		      "day is slowed by half if they go around it.\n\n");
 }
 
 static void rockfall(void) {
@@ -756,41 +498,49 @@ static void rockfall(void) {
 		      "failed save. Any incapacitated creature not moved out of the area is "
 		      "buried under rubble, taking an additional 1d6 bludgeoning damage at "
 		      "the end of each of its turns until the creature is dug out or dead. "
-		      "Decrease the drow pursuit level by 1.\n");
+		      "Decrease the drow pursuit level by 1.\n\n");
 }
 
 static void bridge(void) {
 	niceprint("A ravine 2d4x10 feet wide and 2d4x10 feet deep cuts across the "
 		      "party's path, spanned by an old rope bridge. If the characters "
 		      "cut the bridge after they pass, the drow pursuit level decreases "
-		      "by 1.\n");
+		      "by 1.\n\n");
+	printf("Ravine Width: %d feet\n", 10 * (d(4) + d(4)));
+	printf("Ravine Depth: %d feet\n\n", 10 * (d(4) + d(4)));
 }
 
 static void ruins(void) {
+	int d4;
+	int i;
 	niceprint("The adventurers come across a small ruin hidden in the Underdark. "
 		      "This might be the creation of a subterranean race or a surface ruin "
-		      "that collapsed and sank long ago. If the characters search the ruins, "
-		      "there is a 50\% chance of them finding 1d4 trinkets.\n");
+		      "that collapsed and sank long ago.\n\n");
+	if (d(10) < 6) { 
+		printf("If the characters search the ruins they will find:\n\n");
+		for (i = 0, d4 = d(4); i < d4; i++)
+			trinket();
+		(void)putchar('\n');
+	}
 }
 
 static void shelter(void) {
 	niceprint("The party stumbles upon a cave that is sheltered and easily defended. "
 		      "If the characters camp here, they can finish a long rest without any "
-		      "chance of an encounter while they are resting.\n");
+		      "chance of an encounter while they are resting.\n\n");
 }
 
 static void sinkhole(void) {
 	niceprint("One random party member steps on and collapses a sinkhole, and must "
 		      "succeed on a DC 12 Dexterity saving throw to avoid fallign into a "
 		      "20'-deep pit and taking 2d6 bludgeoning damage. Climbing out of the "
-		      "pit requires a successful DC 15 Strength (Athletics) check.\n");
+		      "pit requires a successful DC 15 Strength (Athletics) check.\n\n");
 }
 
 static void slime(void) {
 	unsigned d20;
 	niceprint("As the adventurers pass through a small cavern, they encounter a patch "
-		      "of slime or mold.\n");
-    (void)putchar('\n');
+		      "of slime or mold.\n\n");
 	d20 = d(6);
     if (d20 < 4)
     	greenslime(1);
@@ -802,15 +552,16 @@ static void slime(void) {
 
 static void vent(void) {
 	niceprint("A hot steam vent erupts beneath a random party member, who must succeed on a "
-		      "DC 12 Dexterity saving throw or take 2d6 fire damage.\n");
+		      "DC 12 Dexterity saving throw or take 2d6 fire damage.\n\n");
 }
 
 static void stream(void) {
-	niceprint("A waterway 2d4 x5' wide cuts accross the party's path. The stream is "
+	niceprint("A waterway cuts accross the party's path. The stream is "
 		      "shallow and easily crossed, and the characters can drink and refresh "
 		      "their water supplies. Edible fish inhabit the stream, so that the DC "
 		      "of any foraging attempts for food in this area is reduced to 10. "
-		      "Crossing the stream reduces the drow pursuit level by 1.\n");
+		      "Crossing the stream reduces the drow pursuit level by 1.\n\n");
+	printf("Width: %d feet\n\n", 5 * (d(4)+d(4)));
 }
 
 static void warning(void) {
@@ -820,11 +571,10 @@ static void warning(void) {
 		      "a sigil carved into one of the stalagmites. The sigil is a drow "
 		      "warning sign that means \"Deamons ahead!\" Any non-drow creature "
 		      "that touches the symbol must make a DC 10 Wisdom saving throw. On a "
-		      "failed save, the character's madness level icnreases by 1.\n");
+		      "failed save, the character's madness level icnreases by 1.\n\n");
 	d20 = d(20);
     if (d20 < 15)
     	return;
-    (void)putchar('\n');
     if (d20 < 17)
     	barlgura(1);
     else if (d20 < 19)
@@ -839,7 +589,7 @@ static void webs(void) {
 		      "Unless the characters come up with a plan for clearing the webs "
 		      "quickly, the party's travel pace for the day is halved as the "
 		      "characters are forced to cut their way through or find an "
-		      "alternate route.\n");
+		      "alternate route.\n\n");
 	d6 = d(6);
     if (d6 < 4)
     	return;
@@ -882,10 +632,9 @@ static void terrain_encounter(void) {
 }
 
 static void creature_encounter(void) {
-	unsigned d4, d20;
+	unsigned d20;
 
 	d20 = d(20);
-	d4 = d(4);
 
 	switch (d20) {
 		case  1: 
@@ -893,7 +642,7 @@ static void creature_encounter(void) {
 			ambush(d(20));
 			break;
 		case  3:
-			if (d4 == 1)
+			if (d(4) == 1)
 				domesticcrawler();
 			else
 				carrioncrawler(1);
@@ -909,6 +658,8 @@ static void creature_encounter(void) {
 		case  8:
 		case  9:
 			firebeetle(d(6)+d(6)+d(6));
+			niceprint("Characters in need of light sources can harvest the glowing "
+			 		  "glands fo slain beetles.\n\n");
 			break;
 		case 10:
 		case 11:
@@ -919,6 +670,10 @@ static void creature_encounter(void) {
 			break;
 		case 13:
 			ochrejelly(1);
+			niceprint("The ooze follows the characters, attacking when they stop "
+				      "to take their next rest. Characters in the back of the marching "
+				      "order who have a passive Wisdom (Perception) score of 14 or "
+				      "higher spot the ooze following them.\n\n");
 			break;
 		case 14:
 		case 15:
@@ -969,5 +724,6 @@ int main(void) {
 	clearconsole();
 	srand(time(NULL));
  	random_encounter();
+ 	(void)putchar('\n');
  	exit(EXIT_SUCCESS);
 }
