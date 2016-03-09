@@ -251,7 +251,7 @@ static void scouts(unsigned d6) {
 			break;
 		case 3:
 		case 4:
-			niceprint("The party encounters adult myconid scounts. They are indifferent "
+			niceprint("The party encounters adult myconid scouts. They are indifferent "
 				      "towards the party and unwilling to discuss their mission or their "
 				      "traels with the adventurers.\n\n");
 			myconid(d(4));
