@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <time.h>
 
 #include "monsters.h"
@@ -250,7 +251,7 @@ static void scouts(unsigned d6) {
 			break;
 		case 3:
 		case 4:
-			niceprint("The party encounters adult myconid adult scounts. They are indifferent "
+			niceprint("The party encounters adult myconid scounts. They are indifferent "
 				      "towards the party and unwilling to discuss their mission or their "
 				      "traels with the adventurers.\n\n");
 			myconid(d(4));
@@ -702,6 +703,7 @@ static void creature_encounter(void) {
 static void random_encounter(void) {
 
 	unsigned d20;
+	bool open = false;
 
 	d20 = d(20);
 
@@ -709,6 +711,40 @@ static void random_encounter(void) {
 		printf("No encounter\n");
 		return;
 	}
+
+	switch (d(3)) {
+		case 1: printf("An encounter occurs in a narrow passageway (single file)\n"); break;
+		case 2: printf("An encounter occurs in a standard passageway (two abreast)\n"); break;
+		case 3:	
+			printf("An encounter occurs in a large open area\n");
+			open = true;
+			break;
+		default:
+			printf("Impossible encounter conditions of %d\n", d20);
+			exit(EXIT_FAILURE);
+	}
+
+	switch (d(2)) {
+		case 1:
+			switch (d(6)) {
+				case 1:
+					printf("The area is warm and damp, lit by bioluminescent green moss (Orum, OotA p.23)\n");
+					break;
+				case 2:
+					printf("The area is lit by %s\n", (open) ? "tall, tube-shaped, bioluminescent mushrooms emitting dim light (Nightlight, OotA, p.23)" : "phosphorescen moss and lichens");
+					break;
+				default:
+					printf("The area is dimly lit by %s\n", (d(5) == 1) ? "faerzress" : "phosphorescent moss and lichens");
+			}
+			break;
+		case 2:
+			printf("The area is in darkness\n");
+			break;
+		default:
+			printf("Impossible lighting conditions of %d\n", d20);
+			exit(EXIT_FAILURE);		
+	}
+	(void)putchar('\n');
 
 	if (d20 < 16 || d20 > 17) {
 		terrain_encounter();
