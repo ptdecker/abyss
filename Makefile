@@ -12,15 +12,20 @@ BDIR = bin
 CC = clang
 CFLAGS = -std=c99 -Wall -g -I include
 
-_OBJ = encounter.o monsters.o utility.o dice.o magic.o conditions.o spells.o trinkets.o
+_OBJ = monsters.o utility.o dice.o magic.o conditions.o spells.o trinkets.o art.o
 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
+all: encounter darklake
+
+encounter: encounter.o $(OBJ)
+	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
+
+darklake: darklake.o $(OBJ)
+	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
+
 $(ODIR)/%.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
-
-encounter: $(OBJ)
-	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
 
 .PHONY: clean
 
