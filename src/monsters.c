@@ -301,11 +301,11 @@ void drow(unsigned count) {
 	(void)putchar('\n');
 };
 
-void duergar(unsigned count) {
+void duergar(unsigned count, int invisible) {
 	int i;
 	nicename(count, "duergar (dwarf)", "MM 122");
 	for (i = 0; i < count; i++) {
-		printf("%d: %d hp", i + 1, d(8)+d(8)+d(8)+d(8)+8);
+		printf("%d: %d hp %s", i + 1, d(8)+d(8)+d(8)+d(8)+8, (invisible-- > 0) ? "(invisible)" : "");
 		(void)putchar('\n');
 	}
 	(void)putchar('\n');
@@ -471,6 +471,16 @@ void kuotoaarchpriest(unsigned count) {
 	(void)putchar('\n');
 };
 
+void derro(unsigned count) {
+	int i;
+	nicename(count, "derro", "OotA 225");
+	for (i = 0; i < count; i++) {
+		printf("%d: %d hp", i + 1, d(6)+d(6)+d(6)+3);
+		(void)putchar('\n');
+	}
+	(void)putchar('\n');
+};
+
 void derrosavant(unsigned count) {
 	int i;
 	nicename(count, "derro savant", "OotA 225");
@@ -598,3 +608,44 @@ void mummy(unsigned count) {
 	}
 	(void)putchar('\n');
 };
+
+void earthelemental(unsigned count) {
+	int i;
+	nicename(count, "earth elemental", "MM 125");
+	for (i = 0; i < count; i++) {
+		printf("%d: %d hp", i + 1, d(10)+d(10)+d(10)+d(10)+d(10)+d(10)+d(10)+d(10)+d(10)+d(10)+d(10)+d(10)+60);
+		(void)putchar('\n');
+	}
+	(void)putchar('\n');
+};
+
+void halfling(unsigned count) {
+	int i;
+	nicename(count, "halfling", "");
+	for (i = 0; i < count; i++) {
+		printf("%d: %d hp", i + 1, d(6));
+		(void)putchar('\n');
+	}
+	(void)putchar('\n');
+}
+
+void kobold(unsigned count) {
+	int i;
+	nicename(count, "kolbold", "MM 196");
+	for (i = 0; i < count; i++) {
+		printf("%d: %d hp", i + 1, d(6)+d(6)+d(6)-3);
+		(void)putchar('\n');
+	}
+	(void)putchar('\n');
+}
+
+void grimlock(unsigned count) {
+	int i;
+	nicename(count, "grimlock", "MM 175");
+	for (i = 0; i < count; i++) {
+		printf("%d: %d hp", i + 1, d(8)+d(8)+2);
+		(void)putchar('\n');
+	}
+	(void)putchar('\n');
+}
+

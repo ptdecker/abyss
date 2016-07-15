@@ -16,12 +16,15 @@ _OBJ = monsters.o utility.o dice.o magic.o conditions.o spells.o trinkets.o art.
 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-all: encounter darklake
+all: encounter darklake gracklstugh
 
 encounter: encounter.o $(OBJ)
 	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
 
 darklake: darklake.o $(OBJ)
+	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
+
+gracklstugh: gracklstugh.o $(OBJ)
 	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
 
 $(ODIR)/%.o: %.c

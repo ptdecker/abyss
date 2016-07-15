@@ -87,6 +87,7 @@ void niceprint(char message[]) {
             pos = squish(pos);
         }
     }
+    printline(pos);
 
     return;
 }
