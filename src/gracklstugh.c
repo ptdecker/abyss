@@ -61,7 +61,7 @@ static void gnome(void) {
 };
 
 static void rioters(void) {
-	niceprint("A mob of derro rampages through the streets. Five of them detach from the mob to attach the characters. "
+	niceprint("A mob of derro rampages through the streets. Five of them detach from the mob to attack the characters. "
 		      "Four duergar patrols arrive when the characters kill the last derro, but they simply nod at the "
 		      "characters before repressing the rest of the mob.  Word quickly spreads that the characters helped the "
 		      "city guard control the unruly derro scum. At your discretion, give the characters advantage on checks "
@@ -246,10 +246,10 @@ static void random_encounter(void) {
 
 	d20 = d(20);
 
-//	if (d20 < 16) {
-//		printf("No encounter\n");
-//		return;
-//	}
+	if (d20 < 16) {
+		printf("No encounter\n");
+		return;
+	}
 
 	creature_encounter();
 
